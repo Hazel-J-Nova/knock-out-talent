@@ -32,12 +32,33 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-
-app.get("/login", (req, res) => {
-    res.render("login")
-})
-
 app.use(express.static(path.join(__dirname, "public")));
+
+
+app.use("/", users);
+
+
+app.get("/", (async (req, res) => {
+	//to do make category model
+	//to do make creator model
+	const content = await Content.find({});
+	
+	categories = new Set(category);
+	categories = Array.from(categories);
+	res.render("../home", { categories, creators });
+}));
+
+
+app.all("*", (req, res, next) => {
+	next(new ExpressError("page not found", "404"));
+});
+
+app.use((err, req, res, next) => {
+	const { status = 500 } = err;
+	if (!err.message) err.message = "something went wrong";
+	res.status(status).render("error", { err });
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port);

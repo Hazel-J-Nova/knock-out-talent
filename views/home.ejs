@@ -1,0 +1,9 @@
+<% layout('layouts/boilerplate')%>
+
+<% for( let category of categories) { %>
+    <div>
+        <a href="/category<%= category._id%> "><img src="<%= category.image %> " alt="<%= category.title %> " ><%= category.title %> </a>
+
+    </div>
+
+<% } %>
