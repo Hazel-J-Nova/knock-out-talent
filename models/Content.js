@@ -31,7 +31,9 @@ const ContentSchema = new Schema({
 	],
 	description: String,
 	subscription: Boolean,
-	tags: [Strings],
-	categories: [Strings],
+	tags: [String],
+	categories: [String],
 	image: String,
 });
+
+module.exports = mongoose.model("Content", ContentSchema);
