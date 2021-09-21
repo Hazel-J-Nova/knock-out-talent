@@ -1,0 +1,15 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+<% for( let content of allContent ) { %>
+    <div class="card" style="width: 18rem;">
+        <img src="https://void-iros-kate.s3.us-east-2.amazonaws.com/6144d58fb342caa2c1749477?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYBML436RQXYGE7YR%2F20210918%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20210918T134543Z&X-Amz-Expires=10000&X-Amz-Signature=8a04d7491cb350d6273beb291e82bd27a0734403a4a5e9954a0afc6fa460aab9&X-Amz-SignedHeaders=host" class="card-img-top" alt="<%= content.title %> ">
+        <div class="card-body">
+          <h5 class="card-title"><%= content.title %>/h5>
+          <p class="card-text"> <%= content.description %> .</p>
+          <a href="/admin/edit/<%=content._id  %> " class="btn btn-primary">edit</a>
+          <a href="#" class="btn btn-primary">Delete</a>
+        </div>
+      </div>
+
+<% } %>
+</div>
