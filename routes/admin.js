@@ -6,7 +6,8 @@ const content = require("../controllers/content");
 const admin = require("../controllers/admin")
 const {s3Storage} = require("../aws/aws")
 const upload = multer({ s3Storage })
-
+const { storage } = require('../cloudinary');
+const uploadCloudinary = multer({ storage });
 
 router.route('/')
     .get(catchAsync(admin.adminDashBoard))
@@ -15,7 +16,12 @@ router.route('/')
 
 router.route("/newcontent")
     .get(admin.newContentForm)
-    .post(upload.array("image"), catchAsync(admin.uploadNewContent))
+    .post(upload.array("content"), catchAsync(admin.uploadNewContent))
+
+
+router.route("/newcontent/image/:id")
+    .get(admin.newImageForm)
+    .post(uploadCloudinary.array("image"), catchAsync(admin.uploadNewImage))
 
 
 router.route("/allcontent")

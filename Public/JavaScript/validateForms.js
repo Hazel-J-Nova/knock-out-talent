@@ -1,4 +1,4 @@
-// jshint esversion:7
+
 
 (function () {
 	"use strict";

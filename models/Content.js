@@ -32,7 +32,7 @@ const ContentSchema = new Schema({
 	description: String,
 	subscription: Boolean,
 	tags: [String],
-	categories: [String],
+	category: String,
 	image: String,
 });
 

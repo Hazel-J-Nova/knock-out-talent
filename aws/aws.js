@@ -23,7 +23,7 @@ const s3 = new AWS.S3();
 
 
 
-console.log(presignedGETURL)
+
      module.exports.upload = multer({
       storage: multerS3({
         s3: s3,

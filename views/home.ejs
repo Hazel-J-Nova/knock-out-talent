@@ -1,11 +1,26 @@
 
 
 <% layout('layouts/boilerplate')%>
+<h1>Content</h1>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+		<% for(let category of categories) { %>
+			<div class="col-md-3 col-sm-6">
+				<div class="card">
+					<% if( category.content[0].images[0]){ %>
+						<img src="<%= category.content[0].images[0].url%>" class="card-img-top">
+					  <% } else{ %>  
+						<img src="#" class="card-img-top">
+					 <% } %>
+					
+					<div class="card-body">
+						<h5 class="card-title"><%= category.title%></h5>
+						<p class="text-right">
+							<a href="/content/<%= category._id %>" class="btn btn-primary btn-sm">More info</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		<% } %>
+	</div>
+</div>
 
-<% for( let category of categories) { %>
-    <div>
-        <a href="/category<%= category._id%> "><img src="<%= category.image %> " alt="<%= category.title %> " ><%= category.title %> </a>
-
-    </div>
-
-<% } %>
