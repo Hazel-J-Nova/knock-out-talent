@@ -1,3 +1,5 @@
+
+
 <% layout('layouts/boilerplate')%>
 <div class="row">
     <h1 class="text-center">New content</h1>
@@ -6,6 +8,13 @@
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
                 <input class="form-control" type="text" id="title" name="content[title]" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="title">category</label>
+                <input class="form-control" type="text" id="category" name="content[category]" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -32,14 +41,15 @@
                     Looks good!
                 </div>
             </div>
-            <div class="mb-3">
-                <div class="form-file custom-file">
-                    <input type="file" class="form-file-input" id="image" name="image" multiple>
-                    <label class="form-file-label" for="image">
-                        <span class="form-file-text custom-file-label">Image to display</span>
-                        <span class="form-file-button">Browse</span>
-                    </label>
-                </div>
+           
+                <div class="mb-3">
+                    <div class="form-file custom-file">
+                        <input type="file" class="form-file-input" id="content" name="content" multiple>
+                        <label class="form-file-label" for="image">
+                            <span class="form-file-text custom-file-label">Content to upload</span>
+                            <span class="form-file-button">Browse</span>
+                        </label>
+                    </div>
             </div>
             <!-- <div class="mb-3">
                 <div class="form-file custom-file">

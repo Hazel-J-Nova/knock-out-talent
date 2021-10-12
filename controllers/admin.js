@@ -2,10 +2,18 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
+const mongoose = require("mongoose");
 
 const Content = require("../models/Content")
 const {createObject,getObject,upload} = require("../aws/aws")
-const Categories = require("../models/Categories")
+const Categories = require("../models/Categories");
+
+
+const getLastMonth = (d) =>{
+    ;
+    d.setMonth(d.getMonth() - 1);
+  return d
+  }
 
 module.exports.adminDashBoard = ((req,res)=>{
     
@@ -18,23 +26,49 @@ module.exports.newContentForm= ((req,res) =>{
     res.render("admin/newcontent")
 })
 
-module.exports.uploadNewContent = (async (req, res, next) => {
-    const content = new Content(req.body.content)
-    const category = await Categories.find({});
-    for (let el in content.categories) {
-        if (!category.includes(el)) {
-            let newCat = new Categories(el);
-            await newCat.save()
-        }
-    }
-    await content.save();
-    
-    const params = {Bucket:process.env.BUCKET,Key:(content._id).toString(), 
-         Body:req.files[0].buffer, ContentType: req.files[0].mimetype, ACL: 'public-read'}
-       
-    createObject(params)
 
-    res.redirect("/admin/allcontent")
+module.exports.uploadNewContent = (async (req, res, ) => {
+  
+    const newContent = new Content(req.body.content)
+    let cat = await Categories.find({title:newContent.category });
+    console.log(cat)
+    if(cat.length ===0){
+
+        cat = await new Categories({title:newContent.category})
+        console.log(cat)
+       cat.content.push(newContent);
+        await cat.save()
+        
+    }
+       
+    else{
+        cat[0].content.push(newContent)
+        await cat.save()
+    }
+    await newContent.save()
+    console.log(getLastMonth(newContent.date))
+//    const params = {Bucket:process.env.BUCKET,Key:(newContent._id).toString(), 
+//          Body:req.files[0].buffer, ContentType: req.files[0].mimetype, ACL: 'public-read'}
+//         const object=  createObject(params)
+    res.redirect(`/admin/newcontent/image/${newContent._id}`)
+})
+
+
+module.exports.newImageForm = (async(req, res)=>{
+    
+const {id} = req.params
+res.render("admin/newimage",{id})
+})
+
+module.exports.uploadNewImage = (async(req,res)=>{
+    
+    const id =(req.params.id)    
+    const content = await Content.findOne({_id:id})
+ 
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    await content.images.push(...imgs)
+    await content.save()
+    res.redirect("/admin/allcontent");
 
 })
 
@@ -46,7 +80,6 @@ module.exports.showAllContent = (async (req,res)=>{
         
         
     }
-    console.log(allContent)
     res.render("admin/allcontent",{allContent})
 })
 

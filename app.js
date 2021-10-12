@@ -11,18 +11,26 @@ const mongoose = require("mongoose");
 const Content = require("./models/Content")
 const Categories = require("./models/Categories")
 // const dbUrl = "mongodb://localhost:27017/kate";
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/Users');
+const flash = require('connect-flash');
+
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const users = require("./routes/users");
+const checkout = require("./routes/checkout")
+const content = require("./routes/content")
 const catchAsync = require("./utils/catchAsync");
+const {getLastMonth} = require("./utils/dateTime")
 const ExpressError = require("./utils/ExpressError")
 const admin = require("./routes/admin")
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const YOUR_DOMAIN = "http://localhost:3000/"
+const MongoDBStore = require('connect-mongo');
 
-const con = mongoose.connect("mongodb://localhost:27017/katetest", {
+
+const con = mongoose.connect("mongodb://localhost:27017/kate-test", {
 	useNewUrlParser: true,
 });
 
@@ -47,63 +55,98 @@ app.use(express.json());
 
 
 
-app.use("/users", users);
-app.use("/admin", admin)
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
+const store =  MongoDBStore.create({
+    mongoUrl: "mongodb://localhost:27017/kate-test",
+    
+    touchAfter: 24 * 60 * 60
+});
 
-app.get("/", catchAsync(async (req, res) => {
-	const categories = await Categories.find({});
+ store.on("error", function (e) {
+     console.log("SESSION STORE ERROR", e)
+})
 
-	
-	res.render("./home", { categories,  });
+const sessionConfig = {
+    name: 'session',
+    secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        // secure: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+
+app.use(session({secret: secret,
+    resave: true,
+    saveUninitialized: true,
+	cookie: {
+        httpOnly: true,
+        // secure: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    },
+	store: store
 }));
 
 
-app.get("/payment", async(req, res)=>{
+app.use(flash())
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+	res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
+app.use("/users", users);
+app.use("/admin", admin) 
+app.use("/checkout", checkout)
+app.use("/content", content)
+
+
+app.get("/", catchAsync(async (req, res) => {
+    const lastMonth = getLastMonth()
+	const categories = await Categories.find({}).populate("content");
+    const latestContent = await Content.find({date:{$gte: lastMonth}})
+    let latestImages = latestContent.filter(el=> el.category)
+     latestImages = latestImages.map(el => ({image:el.images, 
+        id:(el._id.toString()),
+        category:el.category,
+        title:el.title
+    
+    }) )
+        
+    
+	res.render("./home", { categories,  latestContent, latestImages   });
+}));
+
+
+// app.get("/payment", async(req, res)=>{
   
-	res.render("./checkout")
-})
+// 	res.render("./checkout")
+// })
 
 
-app.get("/success", (req, res)=>{
-	res.render("./success")
-})
+// app.get("/success", (req, res)=>{
+// 	res.render("./success")
+// })
 
-app.get("/cancel", (req,res)=>{
-  res.render("./success")
-})
+// app.get("/cancel", (req,res)=>{
+//   res.render("./success")
+// })
 
 
-app.post('/create-checkout-session', async (req, res) => {
 
-  const product = await stripe.products.create({
-    name: 'Starter Dashboard',
-  });
-  
-const price = await stripe.prices.create({
-  product: product.id,
-  unit_amount: 1000,
-  currency: 'usd',
- 
-  })
-
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // TODO: replace this with the `price` of the product you want to sell
-        price: price.id,
-        quantity: 1,
-      },
-    ],
-    payment_method_types: [
-      'card',
-    ],
-    mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/success.html`,
-    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-  });
-  res.redirect(303, session.url)
-});
 
 app.all("*", (req, res, next) => {
 	next(new ExpressError("page not found", "404"));

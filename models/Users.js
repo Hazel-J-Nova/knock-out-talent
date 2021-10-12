@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
+mongoose.models = {};
+mongoose.modelSchemas = {}
+
 const UserSchema = new Schema({
 	email: {
 		type: String,
@@ -10,6 +13,7 @@ const UserSchema = new Schema({
     },
     creator: Boolean,
     admin: Boolean,
+    
 });
 
 UserSchema.plugin(passportLocalMongoose);

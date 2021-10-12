@@ -1,16 +1,52 @@
-const stripe = require('stripe')('sk_test_51JOSAoGIEwgSXQBl3rvXm2jXLusMk71DrjpMSyA09HZ1EY7WGijDjaT2yELahnbVgXB41J8wSuwV2fCo3TDpSIq500bsQ8ldfs');
+const imageArray = [
+  {
+    
+    title: 'Date test',
+    price: 10000,
+    reviews: [],
+    description: 'A test to see the date ',
+    tags: [],
+    category: 'date',
+    date: 2021-10-04,
+    images: ["a"],
+    __v: 0
+  },
+  {
+    
+    title: 'Porn',
+    price: 1,
+    reviews: [],
+    description: 'a second test',
+    tags: [],
+    category: 'date test 2',
+    date: 2021-10-0,
+    images: [],
+    __v: 0
+  },
+  {
+ 
+    title: 'fdfdfdfd',
+    price: 10,
+    reviews: [],
+    description: 'a',
+    tags: [],
+    category: 'a weird and new thing',
+    date: 2021-10,
+    images: [1,21],
+    __v: 0
+  },
+  {
+    
+    title: 'fdfdfdfd',
+    price: 10,
+    reviews: [],
+    description: 'a',
+    tags: [],
+    category: 'test 1',
+    date: 2021-10,
+    images: [1,2,4],
+    __v: 0
+  }]
 
 
-const stripeObject = async () =>{
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1000,
-        currency: 'usd',
-        payment_method_types: ['card'],
-        receipt_email: 'jenny.rosen@example.com',
-      })
-
- }
-
-
-stripeObject.then(paymentIntent)
-
+console.log(filteredImages)
