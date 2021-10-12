@@ -8,6 +8,13 @@ const Content = require("../models/Content")
 const {createObject,getObject,upload} = require("../aws/aws")
 const Categories = require("../models/Categories");
 
+
+const getLastMonth = (d) =>{
+    ;
+    d.setMonth(d.getMonth() - 1);
+  return d
+  }
+
 module.exports.adminDashBoard = ((req,res)=>{
     
     res.render("admin/dashboard")
@@ -24,23 +31,25 @@ module.exports.uploadNewContent = (async (req, res, ) => {
   
     const newContent = new Content(req.body.content)
     let cat = await Categories.find({title:newContent.category });
+    console.log(cat)
     if(cat.length ===0){
 
         cat = await new Categories({title:newContent.category})
-        cat.content.push(newContent);
+        console.log(cat)
+       cat.content.push(newContent);
         await cat.save()
         
     }
        
     else{
-        cat.content.push(newContent)
+        cat[0].content.push(newContent)
         await cat.save()
     }
-    console.log(cat)
     await newContent.save()
-   // const params = {Bucket:process.env.BUCKET,Key:(newContent._id).toString(), 
-     //    Body:req.files[0].buffer, ContentType: req.files[0].mimetype, ACL: 'public-read'}
-   // createObject(params)
+    console.log(getLastMonth(newContent.date))
+//    const params = {Bucket:process.env.BUCKET,Key:(newContent._id).toString(), 
+//          Body:req.files[0].buffer, ContentType: req.files[0].mimetype, ACL: 'public-read'}
+//         const object=  createObject(params)
     res.redirect(`/admin/newcontent/image/${newContent._id}`)
 })
 
@@ -55,7 +64,6 @@ module.exports.uploadNewImage = (async(req,res)=>{
     
     const id =(req.params.id)    
     const content = await Content.findOne({_id:id})
-    console.log(content)
  
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     await content.images.push(...imgs)

@@ -24,6 +24,7 @@ const users = require("./routes/users");
 const checkout = require("./routes/checkout")
 const content = require("./routes/content")
 const catchAsync = require("./utils/catchAsync");
+const {getLastMonth} = require("./utils/dateTime")
 const ExpressError = require("./utils/ExpressError")
 const admin = require("./routes/admin")
 const MongoDBStore = require('connect-mongo');
@@ -108,35 +109,41 @@ app.use((req, res, next) => {
 })
 
 app.use("/users", users);
-app.use("/admin", admin)
+app.use("/admin", admin) 
 app.use("/checkout", checkout)
 app.use("/content", content)
 
 
 app.get("/", catchAsync(async (req, res) => {
+    const lastMonth = getLastMonth()
 	const categories = await Categories.find({}).populate("content");
-    for(let el of categories){
-        if((el.content[0].images[0])){
-            console.log(el.content[0].images[0].url)
-        }
-    }	
-	res.render("./home", { categories,  });
+    const latestContent = await Content.find({date:{$gte: lastMonth}})
+    let latestImages = latestContent.filter(el=> el.category)
+     latestImages = latestImages.map(el => ({image:el.images, 
+        id:(el._id.toString()),
+        category:el.category,
+        title:el.title
+    
+    }) )
+        
+    
+	res.render("./home", { categories,  latestContent, latestImages   });
 }));
 
 
-app.get("/payment", async(req, res)=>{
+// app.get("/payment", async(req, res)=>{
   
-	res.render("./checkout")
-})
+// 	res.render("./checkout")
+// })
 
 
-app.get("/success", (req, res)=>{
-	res.render("./success")
-})
+// app.get("/success", (req, res)=>{
+// 	res.render("./success")
+// })
 
-app.get("/cancel", (req,res)=>{
-  res.render("./success")
-})
+// app.get("/cancel", (req,res)=>{
+//   res.render("./success")
+// })
 
 
 

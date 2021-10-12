@@ -34,6 +34,9 @@ const ContentSchema = new Schema({
 	tags: [String],
 	category: String,
 	image: String,
+	date: {type:Date,
+	default: Date.now()
+	}
 });
 
 module.exports = mongoose.model("Content", ContentSchema);

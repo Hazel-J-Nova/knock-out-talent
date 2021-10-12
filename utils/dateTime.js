@@ -9,3 +9,10 @@ const setTimer = (fn) => {
     }setTimeout(fn, now-nextMonth)
     
 }
+
+
+module.exports.getLastMonth = () =>{
+    let d = new Date();
+    d.setMonth(d.getMonth() - 1);
+  return d
+  }
