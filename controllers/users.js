@@ -1,4 +1,4 @@
-const User = require("../models/users");
+const User = require("../models/Users");
 const { buildParams, sendConfirmationEmail } = require("../email/email");
 const fs = require("fs");
 const path = require("path");
