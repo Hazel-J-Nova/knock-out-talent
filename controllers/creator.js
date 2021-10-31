@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const Content = require("../models/Content");
 const { createObject, getObject, upload } = require("../aws/aws");
-const Categories = require("../models/Categories");
+const Categories = require("../models/categories");
 const Creator = require("../models/Creators");
 const User = require("../models/Users");
 
