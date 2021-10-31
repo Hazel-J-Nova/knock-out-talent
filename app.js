@@ -29,7 +29,7 @@ const { getLastMonth } = require("./utils/dateTime");
 const ExpressError = require("./utils/ExpressError");
 const admin = require("./routes/admin");
 const MongoDBStore = require("connect-mongo");
-const dbUrl = proccess.env.DB_Url;
+const dbUrl = process.env.DB_Url;
 const con = mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
