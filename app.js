@@ -58,7 +58,8 @@ app.use(
 const secret = process.env.SECRET || "thisshouldbeabettersecret!";
 
 const store = MongoDBStore.create({
-  mongoUrl: "dbUrl",
+  mongoUrl:
+    "mongodb+srv://HazelTate:.iq4bF8!vMjpQ5e@cluster0.cwlnx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 
   touchAfter: 24 * 60 * 60,
 });
