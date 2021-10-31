@@ -3,7 +3,7 @@ const Content = require("../models/Content");
 const { getObject, downloadURL } = require("../aws/aws");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.stripe_secret_key);
 const YOUR_DOMAIN = "http://localhost:3000/";
 const { Buffer } = require("buffer");
 const axios = require("axios");
@@ -20,8 +20,8 @@ const REGION = "us-east-2"; //e.g. "us-east-1"
 // Create an Amazon S3 service client object.
 AWS.config.update({
   region: REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.aws_access_key_id,
+  secretAccessKey: process.env.aws_secret_access_key,
 });
 const s3 = new AWS.S3();
 
