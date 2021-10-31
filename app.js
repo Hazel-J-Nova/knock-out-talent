@@ -11,6 +11,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/Users");
 const flash = require("connect-flash");
+const cors = require("cors");
 
 const path = require("path");
 const methodOverride = require("method-override");
@@ -55,6 +56,8 @@ app.use(
     replaceWith: "_",
   })
 );
+app.use(cors());
+
 const secret = process.env.SECRET || "thisshouldbeabettersecret!";
 
 const store = MongoDBStore.create({
