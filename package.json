@@ -35,9 +35,9 @@
   "version": "1.0.0",
   "description": "basic ecommerce site designed for selling digital content",
   "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Hazel Tate",
   "license": "ISC"
