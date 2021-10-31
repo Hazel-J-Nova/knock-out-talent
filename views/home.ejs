@@ -14,72 +14,60 @@
 
 <!--my services -->
 <section class="container text-center my-3 carousel--div ">
-    <h2 class="font-weight-light">latest Content</h2>
+    <div class="container text-center my-3">
+    <h2 class="font-weight-light">Bootstrap Multi Slide Carousel</h2>
     <div class="row mx-auto my-auto justify-content-center">
         <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
 
-            <div class="carousel-inner" role="listbox">
-                for <% for( let [index, content] of latestImages.entries() ) { %>
-                    <h1><a href="/content/<%= content.id %>  "> <%= content._id %> words</a></h1>
-
-                    <% if (index===0) { %>
-                        <div class="carousel-item active">
-                            <div class="col-md-3">
-                                <div class="card">
-                                    <div class="card" style="width: 18rem;">
-                                        <a href="/content/<%= content._id %>" ><img src="https://res.cloudinary.com/dkzjj8fuw/image/upload/e_improve,w_300,h_600,c_thumb,g_auto/v1633883978/kate-corset_ke0qin.jpg" class="card-img-top" alt="..."></a>
-                                        <div class="card-body">
-                                          <h5 class="card-title"><%= content.title %> </h5>
-                                          <p class="card-text">content.creator</p>
-                                          
-                                        </div>
-                                      </div>
-                                    <div class="card-img-overlay"> </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
-                
-                <div class="carousel-item ">
+           <%  latestImages.forEach((element, index) => { %>
+            <% if(index === 0){ %>
+                  <div class="carousel-item active">
                     <div class="col-md-3">
                         <div class="card">
-                            <div class="card" style="width: 18rem;">
-                                <a href="/content/<%= content._id %> "> 
-                                    <img src="https://res.cloudinary.com/dkzjj8fuw/image/upload/e_improve,w_300,h_600,c_thumb,g_auto/v1633883978/kate-corset_ke0qin.jpg" class="card-img-top" alt="..."></a>
-                                <div class="card-body">
-                                  <h5 class="card-title"><%= content.title %> </h5>
-                                  <p class="card-text">content.creator</p>
-                                  
-                                </div>
-                              </div>
-                            <div class="card-img-overlay"></div>
+                            <div class="card-img">
+                                <img src="//via.placeholder.com/500x400/31f?text=1" class="img-fluid">
+                            </div>
+                            <div class="card-img-overlay">Slide 1</div>
                         </div>
                     </div>
                 </div>
-                <% } %>
-                
-               
-                
-            <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
+
+            <% } else { %>
+                <div class="carousel-item">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="//via.placeholder.com/500x400/7d2?text=3" class="img-fluid">
+                            </div>
+                            <div class="card-img-overlay">Slide <%= index %> </div>
+                        </div>
+                    </div>
+                </div>
+
+            <% } %>
+        <% }) %>
+        </div>
+        <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </a>
             <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
-        </div>
     </div>
- 
+    <h5 class="mt-2 fw-light">advances one slide at a time</h5>
+</div>
 </section>
 
     <!--My Work-->
-<section class="my--work" id="work">
+<section class="my--work all--categories" id="work">
     <h2 class="section__title">Categories</h2>
     
-    <div class="portfolio">
+    <div class="portfolio category">
         <% for( let category of categories ) { %>
             <% if (category.content[0].images[0]) { %>
                
-                <a href="/content/category/<%= category._id %>  " class="portfolio__item">
+                <a href="/content/category/<%= category._id %>  " class="category__item">
                     <img src="<%= category.content[0].images[0].url %> " alt="" class="portfolio__img">
                 </a>
             <% } %>

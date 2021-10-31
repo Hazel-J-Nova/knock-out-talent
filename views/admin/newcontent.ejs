@@ -1,5 +1,5 @@
 
-
+<link rel="stylesheet" href="../Stylesheets/dateTime.css">
 <% layout('layouts/boilerplate')%>
 <div class="row">
     <h1 class="text-center">New content</h1>
@@ -12,6 +12,19 @@
                     Looks good!
                 </div>
             </div>
+            <div class="mb-3">
+
+            </div>
+              <div class="mb-3">
+                  <button class="accordion btn">schedule post?</button>
+                    <div class="panel">
+                   
+                <input class="form-control" type="datetime-local" id="dRW" name="content[date]" >
+               
+                </div>
+                
+            </div>
+            
             <div class="mb-3">
                 <label class="form-label" for="title">category</label>
                 <input class="form-control" type="text" id="category" name="content[category]" required>
@@ -51,16 +64,10 @@
                         </label>
                     </div>
             </div>
-            <!-- <div class="mb-3">
-                <div class="form-file custom-file">
-                    <input type="file" class="form-file-input" id="file" name="file" multiple>
-                    <label class="form-file-label" for="image">
-                        <span class="form-file-text custom-file-label">Files to upload</span>
-                        <span class="form-file-button">Browse</span>
-                    </label>
-                </div>
-            </div> -->
+            
+            </div> -
             <div class="mb-3">
                 <button class="btn btn-success">Upload Content</button>
             </div>
         </form>
+    <script src="/JavaScript/accordian.js"></script>

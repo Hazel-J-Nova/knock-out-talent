@@ -1,23 +1,27 @@
-const burger = document.querySelector(".icon");
-const dropdown = document.querySelector(".dropdown");
-let collapsed = true;
+let url = "http://localhost:3000/api/categories";
 
-burger.addEventListener("click", () => {
-	if (collapsed) {
-		dropdown.style.maxHeight = dropdown.scrollHeight + "px";
-		collapsed = false;
-	} else {
-		dropdown.style.maxHeight = "";
-		collapsed = true;
-	}
-	if (burger.innerHTML == "menu") burger.innerHTML = "close";
-	else burger.innerHTML = "menu";
-});
+const createLi = (el) => {
+  if (el.title) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `/category/${el.id}`;
+    a.classList = `${a.classList} dropdown-item`;
+    a.innerHTML = el.title;
+    li.append(a);
+    dropDownMenu.append(li);
+  }
+};
+const getFunction = async (url) => {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-window.addEventListener("resize", () => {
-	if (!collapsed) {
-		dropdown.style.maxHeight = "";
-		collapsed = true;
-	}
-	burger.innerHTML = "menu";
+let a = getFunction(url).then((element) => {
+  for (let el of element) {
+    createLi(el);
+  }
 });

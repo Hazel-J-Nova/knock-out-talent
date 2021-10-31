@@ -1,33 +1,23 @@
-
-
-
 <% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/Stylesheets/home.css">
 
-<h1>Content</h1>
-<div class="row text-center" style="display:flex; flex-wrap: wrap;">
-		<% for(let category of categories) { %>
-			<div class="col-md-6 col-sm-12 col-lg-4 ">
-				<div class="card category">
-					
-				
-
-					<% if( category.content[0].images[0]){ %>
-						<%= v2 = blue %> 
-						<% v1= `${category.content[0].images[0].url}` %>
-
-						<div style ='background-image: url(<%= v1%>);
-						background-repeat: no-repeat; '>
-						<h1>Test</h1>
-						</div>
-
-					  <% } else{ %>  
-						<img src="#" class="card-img-top">
-					 <% } %>
-					
-					
-				</div>
-			</div>
+ 
+<h1>categories</h1>
+<% for( let category of allCategories ) { %>
+ <section class="intro">
+	 <% if (category.content[0].category) { %>
+	    <h1 class="section__title section__title--intro">
+            <% category.content[0].category %> 
+        </h1>
+        <% if (category.content[0].images[0]) { %>
+		 <a href="/content/category/<%= category.id %> "><img src="<%= category.content[0].images[0].url %> " alt="" class="intro__img"></a>
 		<% } %>
-	</div>
-</div>
-
+        
+    </section>
+    
+    </div>
+	 <% } %>
+      
+ 
+<% } %>
+   

@@ -1,42 +1,32 @@
-//jshint esversion:9
-
-// to do make review model to link to content
-// also need to do User model as well
-// also learn about video downloads
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ImageSchema = new Schema({
-	url: String,
-	filename: String,
+ImageSchema = new Schema({
+  url: String,
+  filename: String,
 });
 
-const UploadSchema = new Schema({
-    url: String,
-    filename: String
-})
-
 const ContentSchema = new Schema({
-	title: String,
-	price: Number,
-	creator: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
-	},
-	images: [ImageSchema],
-	reviews: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Review",
-		},
-	],
-	description: String,
-	subscription: Boolean,
-	tags: [String],
-	category: String,
-	image: String,
-	date: {type:Date,
-	default: Date.now()
-	}
+  title: String,
+  price: [Number],
+  sales: Number,
+  revenue: Number,
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "Creator",
+  },
+  images: [ImageSchema],
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+  description: String,
+  subscription: Boolean,
+  subscriptionTier: String,
+  tags: [String],
+  category: String,
+  date: { type: Date, default: Date.now() },
 });
 
 module.exports = mongoose.model("Content", ContentSchema);

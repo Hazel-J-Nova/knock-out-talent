@@ -50,18 +50,6 @@ span {
     cursor: pointer;
 }
 
-button {
-    margin: 2rem;
-    margin-bottom: 1.5rem;
-    padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 1rem;
-    border: none;
-    font-size: 1.1rem;
-    font-weight: bolder;
-    color: #fff;
-    background: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
-}
 
 /* ........///Sign-Up///......... */
 

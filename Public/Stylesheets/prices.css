@@ -1,0 +1,34 @@
+
+
+.price {
+    background-color: #111;
+    color: var(--clr-accent);
+    text-align: center;
+    padding: 2.5em 0;
+    min-width: 100%;
+}
+
+
+
+.prices__radio {
+    font-size: var(--fs-h);
+    font-weight: var(--fw-bold);
+}
+
+.prices__radio,
+.prices-list__radio {
+    opacity: .7;
+}
+
+.prices-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 2em 0 0;
+    padding: 0;
+}
+
+.prices-list__link {
+    padding: 2em;
+    font-size: var(--fs-h3)
+}

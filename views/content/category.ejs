@@ -1,25 +1,50 @@
 <% layout('layouts/boilerplate')%>
 <link rel="stylesheet" href="/Stylesheets/home.css">
-<% for( let content of allContent ) { %>
-    <section class="intro">
-        <h3> </h3>
+<link rel="stylesheet" href="/Stylesheets/prices.css">
+
+ <% for( let content of allContent ) { %>
+ <% if (content.images[0]) { %>
+    <contianer>
+   <section class="intro">
+        <h3><%= content.title %>  </h3>
         <h1 class="section__title section__title--intro">
-            text 
+            <%= content.description %>  
         </h1>
         <p class="section__subtitle section__subtitle--intro">A short subtitle</p>
-        <img src=" " alt="" class="intro__img">
-    </section>
-    
-    <div class="portfolio-item-individual">
-        <p>Voluptatibus, soluta blanditiis! Incidunt ea unde itaque illo molestiae eligendi sint culpa nobis voluptas sapiente voluptate, magnam ipsum eius earum?</p>
-        <img src="" alt="">
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe et amet tenetur! Fugit sequi optio corrupti fugiat ducimus consequatur incidunt?</p>
-        <p>Voluptatibus, soluta blanditiis! Incidunt ea unde itaque illo molestiae eligendi sint culpa nobis voluptas sapiente voluptate, magnam ipsum eius earum?</p>
-    </div>
-<% } %>
+       
+        
+        <img src=" <%= content.images[0].url %> " alt="" class="intro__img">
+           <form class="prices" action="/checkout/<%= content._id %> " method="POST">
+               <div  class="price">
+  
+    <ul class="price-list">
+        <p>select your price</p>
+                <% for( let price of content.price ) { %>
+        
+        <li class="prices-list__item">
+            <input type="radio" id="<%=  price %>" class="prices-list__radio" value= "<%=  price %>" name="<%=  price %>">
+            <label for=" <%=  price %>" class="radio-label" > <span class="radio-border"></span>  $<%=  price %> </label>                        
+        </li>
+        
+        <% } %>
+    </ul>
+       <button class="btn">Buy Content</button>
+</div>
+  
+</section>
+
+		
+        
+        </form>
+ <% } %>
+   
+      
+   
+ 
+        <% } %>
         
         
-        
+    </contianer>
         <!-- Footer -->
         <footer class="footer">
             <!-- replace with your own email address -->
