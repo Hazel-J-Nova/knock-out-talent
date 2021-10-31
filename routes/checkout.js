@@ -8,7 +8,7 @@ const YOUR_DOMAIN = "http://localhost:3000/";
 const { Buffer } = require("buffer");
 const axios = require("axios");
 
-const AWS = require("@aws-sdk/client-s3");
+const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const multer = require("multer");
 
