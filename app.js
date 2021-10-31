@@ -114,6 +114,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+
 app.use("/users", users);
 app.use("/admin", admin);
 app.use("/checkout", checkout);
