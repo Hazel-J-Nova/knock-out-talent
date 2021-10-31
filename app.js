@@ -21,7 +21,6 @@ const users = require("./routes/users");
 const api = require("./routes/api");
 const creator = require("./routes/creator");
 
-const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const checkout = require("./routes/checkout");
 const content = require("./routes/content");
@@ -106,19 +105,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use(helmet());
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
-
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
 
 app.use("/users", users);
 app.use("/admin", admin);
