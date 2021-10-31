@@ -30,9 +30,12 @@ const ExpressError = require("./utils/ExpressError");
 const admin = require("./routes/admin");
 const MongoDBStore = require("connect-mongo");
 const dbUrl = process.env.DB_Url;
-const con = mongoose.connect(dbUrl, {
-  useNewUrlParser: true,
-});
+const con = mongoose.connect(
+  "mongodb+srv://HazelTate:.iq4bF8!vMjpQ5e@cluster0.cwlnx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+  }
+);
 
 const db = mongoose.connection;
 
