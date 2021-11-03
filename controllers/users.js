@@ -98,6 +98,7 @@ module.exports.passwordResetForm = async (req, res) => {
 
 module.exports.userProfile = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   const user = await User.findById(id);
   if (!user) {
     req.flash("error", "You do not have permission to view that");
