@@ -7,6 +7,8 @@ let dirName = path.resolve(__dirname, "..");
 const Creator = require("../models/Creators");
 let verifyEmailPath = `${dirName}\\email\\register.html`;
 let resetEmailPath = `${dirName}\\email\\register.html`;
+const Content = require("../models/Content");
+const Categories = require("../models/Categories");
 
 module.exports.renderRegister = (req, res) => {
   res.render("users/register");
@@ -98,15 +100,15 @@ module.exports.passwordResetForm = async (req, res) => {
 
 module.exports.userProfile = async (req, res) => {
   const { userName } = req.params;
-  console.log(id);
-  const user = await User.findOne({ username: Username });
+
+  const user = await User.findOne({ username: userName });
   if (!user) {
     req.flash("error", "You do not have permission to view that");
     res.redirect("/");
   }
-  const creator = await Creator.findOne({ user: id })
-    .populate(content)
-    .populate(categories);
+  const creator = await Creator.findOne({ user: user._id })
+    .populate("content")
+    .populate("categories");
   res.render("users/profile", { creator, user });
 };
 

@@ -502,3 +502,7 @@ padding-bottom: 2rem;
     margin-right: auto;
 }
 
+.btn-cnt{
+ display: flex;
+ justify-content: center;
+ }

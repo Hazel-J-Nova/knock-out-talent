@@ -19,6 +19,7 @@ module.exports.uploadNewContent = async (req, res) => {
   const newContent = new Content(req.body.content);
   newContent.creator = req.user.id;
   let price = req.user.price;
+  price = price.split(",");
   for (let el of price) {
     newContent.price.push(el);
   }
