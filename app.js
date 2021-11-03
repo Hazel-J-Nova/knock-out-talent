@@ -123,6 +123,9 @@ app.get(
   "/",
 
   catchAsync(async (req, res) => {
+    if (req.user) {
+      console.log(req.user);
+    }
     const lastMonth = getLastMonth();
     const creators = await Creators.find({}).populate("content");
     const categories = await Categories.find({}).populate("content");

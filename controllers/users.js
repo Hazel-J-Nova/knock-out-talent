@@ -12,27 +12,27 @@ module.exports.renderRegister = (req, res) => {
 };
 
 module.exports.register = async (req, res, next) => {
-  try {
-    const { email, username, password } = req.body;
-    const user = new User({ email, username });
-    let htmlTemplate = fs.readFileSync(verifyEmailPath, "utf8");
-    htmlTemplate = htmlTemplate
-      .replace("username", username)
-      .replace("registerLink", `http://localhost:3000/api/${user._id}`);
+  // try {
+  //   const { email, username, password } = req.body;
+  //   const user = new User({ email, username });
+  //   let htmlTemplate = fs.readFileSync(verifyEmailPath, "utf8");
+  //   htmlTemplate = htmlTemplate
+  //     .replace("username", username)
+  //     .replace("registerLink", `http://localhost:3000/api/${user._id}`);
 
-    let params = buildParams(email, htmlTemplate, "aaaaaaa");
-    sendConfirmationEmail(params);
-    const registeredUser = await User.register(user, password);
-    req.login(registeredUser, (err) => {
-      if (err) return next(err);
+  //   let params = buildParams(email, htmlTemplate, "aaaaaaa");
+  //   sendConfirmationEmail(params);
+  //   const registeredUser = await User.register(user, password);
+  //   req.login(registeredUser, (err) => {
+  //     if (err) return next(err);
 
-      req.flash("success", "Please check your email to register your account");
-      res.redirect("/");
-    });
-  } catch (e) {
-    req.flash("error", e.message);
-    res.redirect("/");
-  }
+  //     req.flash("success", "Please check your email to register your account");
+  //     res.redirect("/");
+  //   });
+  // } catch (e) {
+  //   req.flash("error", e.message);
+  res.redirect("/");
+  // }
 };
 
 module.exports.renderLogin = (req, res) => {
@@ -111,4 +111,19 @@ module.exports.userProfile = async (req, res) => {
     req.flash("failure", "You do not have permission to view that");
     res.redirect("/");
   }
+  const creator = await Creator.findOne({ user: id })
+    .populate(content)
+    .populate(categories);
+  res.render("users/profile", { creator, user });
+};
+
+module.exptorts.updateUserProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    req.flash("failure", "You do not have permission to view that");
+    res.redirect("/");
+  }
+  const creator = await Creator.findOne({ user: id });
+  res.render("users/updateProfile", { creator });
 };

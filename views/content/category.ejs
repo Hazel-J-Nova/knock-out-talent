@@ -4,6 +4,7 @@
 
  <% for( let content of allContent ) { %>
  <% if (content.images[0]) { %>
+    <form action="/checkout/<%= content.id %> " method="post">
     <contianer>
    <section class="intro">
         <h3><%= content.title %>  </h3>
