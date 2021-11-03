@@ -15,8 +15,8 @@ const CreatorSchema = new Schema({
   categories: [String],
   bio: String,
   subscribers: [{ type: Schema.Types.ObjectId, ref: "Users" }],
-  totalRevenue: Number,
-  currentValue: Number,
+  totalRevenue: {type:Number, default: 0},
+  currentValue: {type:Number, default: 0},
   verifiedId: { type: Boolean, default: false },
   verfiedEmail: { type: Boolean, default: false },
 });
