@@ -33,6 +33,6 @@ router
   .get(users.renderPasswordResetForm)
   .post(users.passwordResetForm);
 
-router.route("/:userId").get(users.userProfile);
+router.route("/:userName").get(users.userProfile);
 
 module.exports = router;
