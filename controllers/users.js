@@ -94,7 +94,7 @@ module.exports.passwordResetForm = async (req, res) => {
   user.setPassword(req.body.password);
   user.token = "";
   req.flash("success", "password updated");
-  res.redirect("/user/login");
+  res.redirect("user/login");
 };
 
 module.exports.userProfile = async (req, res) => {

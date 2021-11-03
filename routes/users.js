@@ -36,7 +36,7 @@ router
 
 router
   .route("/:userId")
-  .get(catchAsync(users.userProfile))
+  .get(users.userProfile)
   .post(catchAsync(users.updateProfile));
 
 module.exports = router;
