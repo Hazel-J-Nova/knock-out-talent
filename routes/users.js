@@ -7,12 +7,12 @@ const users = require("../controllers/users");
 
 router
   .route("/register")
-  .get(catchAsync(users.renderRegister))
+  .get(users.renderRegister)
   .post(catchAsync(users.register));
 
 router
   .route("/login")
-  .get(catchAsync(users.renderLogin))
+  .get(users.renderLogin)
   .post(
     catchAsync,
     passport.authenticate("local", {

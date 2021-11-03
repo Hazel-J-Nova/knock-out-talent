@@ -7,6 +7,7 @@ let dirName = path.resolve(__dirname, "..");
 
 let verifyEmailPath = `${dirName}\\email\\register.html`;
 let resetEmailPath = `${dirName}\\email\\register.html`;
+
 module.exports.renderRegister = (req, res) => {
   res.render("users/register");
 };
