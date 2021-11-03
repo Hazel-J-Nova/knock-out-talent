@@ -5,9 +5,9 @@
         <div class="box--intro">
         <section class="intro" id="home">
             <h1 class="section__title section__title--intro">
-                Hi I am <strong>Hazel Tate</strong>
+                Welcome to <strong>Knockout Talent</strong>
             </h1>
-            <p class="section__subtitle section__subtitle--intro">Full Stack Dev</p>
+            <p class="section__subtitle section__subtitle--intro">TAG LINE</p>
             <img src="https://res.cloudinary.com/dkzjj8fuw/image/upload/e_improve,w_300,h_600,c_thumb,g_auto/v1633883978/kate-corset_ke0qin.jpg" alt="a picture of Hazel" class="intro__img">
         </section>
     </div>
@@ -15,7 +15,7 @@
 <!--my services -->
 <section class="container text-center my-3 carousel--div ">
     <div class="container text-center my-3">
-    <h2 class="font-weight-light">Bootstrap Multi Slide Carousel</h2>
+    <h2 class="font-weight-light">latest content</h2>
     <div class="row mx-auto my-auto justify-content-center">
         <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner" role="listbox">
@@ -55,20 +55,20 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
     </div>
-    <h5 class="mt-2 fw-light">advances one slide at a time</h5>
+   
 </div>
 </section>
 
     <!--My Work-->
 <section class="my--work all--categories" id="work">
-    <h2 class="section__title">Categories</h2>
+    <h2 class="section__title category--title">Categories</h2>
     
     <div class="portfolio category">
         <% for( let category of categories ) { %>
             <% if (category.content[0].images[0]) { %>
                
                 <a href="/content/category/<%= category._id %>  " class="category__item">
-                    <img src="<%= category.content[0].images[0].url %> " alt="" class="portfolio__img">
+                    <img src="<%= category.content[0].images[0].url %> " alt="" class="portfolio__img card-img">
                 </a>
             <% } %>
         <% } %>
