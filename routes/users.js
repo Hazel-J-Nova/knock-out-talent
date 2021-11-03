@@ -26,7 +26,7 @@ router.get("/logout", users.logout);
 
 router
   .route("/resetPassword")
-  .get(catchAsync(users.renderResetPassword))
+  .get(users.renderResetPassword)
   .post(catchAsync(users.resetPassword));
 
 router
