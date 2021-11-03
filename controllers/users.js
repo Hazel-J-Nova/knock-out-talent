@@ -55,7 +55,7 @@ module.exports.resetPassword = async (req, res, next) => {
     const { userName } = req.body;
     const user = await User.findOne({ username: userName });
     if (!user) {
-      req.flash("failure", "sorry there is no user with that name");
+      req.flash("error", "sorry there is no user with that name");
       res.redirect("/");
     }
     late = fs.readFileSync(resetEmailPath, "utf8");
@@ -88,7 +88,7 @@ module.exports.passwordResetForm = async (req, res) => {
   const { token } = req.params;
   const user = await User.findOne({ username: userName });
   if (!user || userName !== user.username || user.token !== token || !token) {
-    req.flash("failure", "sorry no user with that Id");
+    req.flash("error", "sorry no user with that Id");
     res.redirect("/");
   }
   user.setPassword(req.body.password);
@@ -101,7 +101,7 @@ module.exports.userProfile = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
-    req.flash("failure", "You do not have permission to view that");
+    req.flash("error", "You do not have permission to view that");
     res.redirect("/");
   }
   const creator = await Creator.findOne({ user: id })
