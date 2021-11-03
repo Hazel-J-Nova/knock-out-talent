@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const flash = require("express-flash");
 let dirName = path.resolve(__dirname, "..");
-
+const Creator = require("../models/Creators");
 let verifyEmailPath = `${dirName}\\email\\register.html`;
 let resetEmailPath = `${dirName}\\email\\register.html`;
 

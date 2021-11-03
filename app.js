@@ -124,7 +124,7 @@ app.get(
   "/",
 
   catchAsync(async (req, res) => {
-    console.log(req.session);
+    console.log(req.session.passport);
     const lastMonth = getLastMonth();
     const creators = await Creators.find({}).populate("content");
     const categories = await Categories.find({}).populate("content");

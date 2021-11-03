@@ -14,10 +14,9 @@ router
   .route("/login")
   .get(users.renderLogin)
   .post(
-    catchAsync,
     passport.authenticate("local", {
       failureFlash: true,
-      failureRedirect: "/users/login",
+      failureRedirect: "/login",
     }),
     users.login
   );
