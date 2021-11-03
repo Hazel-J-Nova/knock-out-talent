@@ -1,10 +1,55 @@
 <% layout('layouts/boilerplate')%>
 
 <h1>Welcome  <% user.username %> </h1>
-
-
+<img src="<%= creator.avatar %> " alt="a picture of <%= user.username %> ">
+<p><%= creator.bio %> </p>
+<button class="btn">update profile</button>
+<div>
+    <h2> you payouts</h2>
+    <p><%= creator.currentValue %> </p>
+    <button><a href="">cash out</a></button>
+    <p> all time earnings</p>
+    <p><%= creator.totalRevenue %> </p>
+</div>
+<div>
     <p>upload new content</p>
     <button class="btn">
-        <a href="/admin/newContent">Upload new content</a>
+        <a href="/admin/newContent"></a>
     </button>
 </div>
+<div>
+    <h2>your content</h2>
+    
+    <% creator.content.forEach(el => { %>
+     <form action="/content/update/<%= content.id %> " method="post">
+ <% if (content.images[0]) { %>
+    <contianer>
+   <section class="intro">
+        <h3><%= content.title %>  </h3>
+        <h1 class="section__title section__title--intro">
+            <%= content.description %>  
+        </h1>
+        <p class="section__subtitle section__subtitle--intro">A short subtitle</p>
+       
+        
+        <img src=" <%= content.images[0].url %> " alt="" class="intro__img">
+           <form class="prices" action="/checkout/<%= content._id %> " method="POST">
+               <div  class="price">
+  
+    <ul class="price-list">
+                <% for( let price of content.price ) { %>
+        
+        <li class="prices-list__item">
+            <%= price %>                      
+        </li>
+        
+        <% } %>
+    </ul>
+       <button class="btn">Update Content</button>
+</div>
+  
+</section>
+        </form>
+    <% }) %>
+</div>
+
