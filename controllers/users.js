@@ -103,3 +103,12 @@ module.exports.passwordResetForm = async (req, res) => {
   req.flash("success", "password updated");
   res.redirect("/user/login");
 };
+
+module.exports.userProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    req.flash("failure", "You do not have permission to view that");
+    res.redirect("/");
+  }
+};

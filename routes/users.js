@@ -7,13 +7,14 @@ const users = require("../controllers/users");
 
 router
   .route("/register")
-  .get(users.renderRegister)
+  .get(catchAsync(users.renderRegister))
   .post(catchAsync(users.register));
 
 router
   .route("/login")
-  .get(users.renderLogin)
+  .get(catchAsync(users.renderLogin))
   .post(
+    catchAsync,
     passport.authenticate("local", {
       failureFlash: true,
       failureRedirect: "/login",
@@ -25,11 +26,17 @@ router.get("/logout", users.logout);
 
 router
   .route("/resetPassword")
-  .get(users.renderResetPassword)
-  .post(users.resetPassword);
+  .get(catchAsync(users.renderResetPassword))
+  .post(catchAsync(users.resetPassword));
 
 router
   .route("/passwordResetForm/:userId/:token")
   .get(users.renderPasswordResetForm)
   .post(users.passwordResetForm);
+
+router
+  .route("/:userId")
+  .get(catchAsync(users.userProfile))
+  .post(catchAsync(users.updateProfile));
+
 module.exports = router;

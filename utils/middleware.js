@@ -28,7 +28,7 @@ module.exports.isCreator = async (req, res, next) => {
   const creator = await Creator.findById(id);
   if (!creator.user.equals(req.user._id)) {
     req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/campgrounds/${id}`);
+    return res.redirect(`/`);
   }
   next();
 };
