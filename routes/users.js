@@ -17,7 +17,7 @@ router
     catchAsync,
     passport.authenticate("local", {
       failureFlash: true,
-      failureRedirect: "/login",
+      failureRedirect: "/users/login",
     }),
     users.login
   );
@@ -34,9 +34,6 @@ router
   .get(users.renderPasswordResetForm)
   .post(users.passwordResetForm);
 
-router
-  .route("/:userId")
-  .get(users.userProfile)
-  .post(catchAsync(users.updateProfile));
+router.route("/:userId").get(users.userProfile);
 
 module.exports = router;
