@@ -117,7 +117,7 @@ module.exports.userProfile = async (req, res) => {
   res.render("users/profile", { creator, user });
 };
 
-module.exptorts.updateUserProfile = async (req, res) => {
+module.exports.updateUserProfile = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
