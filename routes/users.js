@@ -26,14 +26,17 @@ router.get("/logout", users.logout);
 
 router
   .route("/resetPassword")
-  .get(users.renderResetPassword)
-  .post(users.resetPassword);
+  .get(catchAsync(users.renderResetPassword))
+  .post(catchAsync(users.resetPassword));
 
 router
   .route("/passwordResetForm/:userId/:token")
   .get(users.renderPasswordResetForm)
   .post(users.passwordResetForm);
 
-router.route("/:userId").get(users.userProfile).post(users.updateProfile);
+router
+  .route("/:userId")
+  .get(catchAsync(users.userProfile))
+  .post(catchAsync(users.updateProfile));
 
 module.exports = router;
