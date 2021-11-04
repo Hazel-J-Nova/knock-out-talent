@@ -1,50 +1,33 @@
-Simulated bj on toy
+  <% creator.content.forEach(el => { %>
+     <form action="/content/update/<%= content.id %> " method="post">
+ <% if (content.images[0]) { %>
+    <contianer>
+   <section class="intro">
+        <h3><%= content.title %>  </h3>
+        <h1 class="section__title section__title--intro">
+            <%= content.description %>  
+        </h1>
+        <p class="section__subtitle section__subtitle--intro">A short subtitle</p>
+       
+        
+        <img src=" <%= content.images[0].url %> " alt="" class="intro__img">
+           <form class="prices" action="/checkout/<%= content._id %> " method="POST">
+               <div  class="price">
+  
+    <ul class="price-list">
+                <% for( let price of content.price ) { %>
+        
+        <li class="prices-list__item">
+            <%= price %>                      
+        </li>
+        
+        <% } %>
+    </ul>
+       <button class="btn">Update Content</button>
+</div>
+  
+</section>
+        </form>
+    <% }) %>
+</div>
 
-Masturbation (couch, outdoors, in snow, in shower) 
-
-Cucking 
-
-Wax play
-
-rope play 
-
-Being eaten out 
-
-Dancing (clothed, topless, nude) 
-
-Fucking myself with a hairbrush 
-
-Sph small pp humiliation 
-
-Dressed like a “princess”
-
- Smoking fetish
-
-foot fetish 
-
-Eating fetish
-
-Dressed like a vampire. 
-
-Being fucked in the woods 
-
-Degradation
- 
-Real blowjob 
-
-Bra and panty teasers 
-
-Strip tease
-
-Shaving
-
-
-
-<section class="section">
-    <div class="card" style="width: 100%;">
-        <img src="/Img/Kate-dark.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
-           
-            <h1 class="card-text">Kate's Erotic content</h1>
-            <h3 class="card-text">Where your wildest fantasies come true</h3>       
-  </section>
