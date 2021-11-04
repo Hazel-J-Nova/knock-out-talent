@@ -124,14 +124,15 @@ app.get(
   "/",
 
   catchAsync(async (req, res) => {
-    if (req.user.username) {
+    console.log(req.user);
+    if (req.user) {
       const userName = req.user.username;
-      const user = await User.findOne({ username: userName });
-      user.admin = true;
-      user.creator = true;
-      await user.save();
+      const currentUser = await User.findOne({ username: userName });
+      currentUser.admin = true;
+      currentUser.creator = true;
+      await currentUser.save();
+      console.log(currentUser);
     }
-
     const lastMonth = getLastMonth();
     const creators = await Creators.find({}).populate("content");
     const categories = await Categories.find({}).populate("content");
