@@ -8,7 +8,7 @@ const Creator = require("../models/Creators");
 let verifyEmailPath = `${dirName}\\email\\register.html`;
 let resetEmailPath = `${dirName}\\email\\register.html`;
 const Content = require("../models/Content");
-const Categories = require("../models/Categories");
+const Categories = require("../models/categories");
 
 module.exports.renderRegister = (req, res) => {
   res.render("users/register");
