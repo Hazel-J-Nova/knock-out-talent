@@ -20,7 +20,8 @@ module.exports.uploadNewContent = async (req, res) => {
   newContent.creator = req.user.id;
 
   let cat = await Categories.findOne({ title: newContent.category });
-  if (!cat.length === 0) {
+  console.log(cat);
+  if (!cat === null) {
     cat.content.push(newContent);
     await cat.save();
   } else {
