@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const getLastMonth = require("../utils/dateTime");
 const Content = require("../models/Content");
 const { createObject, getObject, upload } = require("../aws/aws");
-const Categories = require("../models/Categories");
+const Categories = require("../models/categories");
 
 module.exports.adminDashBoard = (req, res) => {
   res.render("admin/dashboard");

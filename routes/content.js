@@ -1,11 +1,9 @@
-//jshint esversion:9
-
 const multer = require("multer");
 const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const content = require("../controllers/content");
-const Category = require("../models/Categories");
+const Category = require("../models/categories");
 const Content = require("../models/Content");
 
 router.get("/", async (req, res) => {
