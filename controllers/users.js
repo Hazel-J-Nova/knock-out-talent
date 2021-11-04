@@ -101,14 +101,16 @@ module.exports.passwordResetForm = async (req, res) => {
 module.exports.userProfile = async (req, res) => {
   const { userName } = req.params;
 
-  const user = await User.findOne({ username: userName });
+  const user = await User.find({ username: userName });
+  console.log(user);
   if (!user) {
     req.flash("error", "You do not have permission to view that");
     res.redirect("/");
   }
-  const creator = await Creator.findOne({ user: user._id })
-    .populate("content")
-    .populate("categories");
+  const creator = "a";
+  //const creator = await Creator.findOne({ user: user._id })
+  // .populate("content")
+  // .populate("categories");
   res.render("users/profile", { creator, user });
 };
 

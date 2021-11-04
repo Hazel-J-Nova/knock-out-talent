@@ -124,7 +124,9 @@ app.get(
   "/",
 
   catchAsync(async (req, res) => {
-    console.log(req.user);
+    const a = await User.findById("61841061100d24094aa24430");
+    a.username = "Chickenantichrist";
+    await a.save();
     if (req.user) {
       const userName = req.user.username;
       const currentUser = await User.findOne({ username: userName });
