@@ -18,11 +18,7 @@ module.exports.newContentForm = (req, res) => {
 module.exports.uploadNewContent = async (req, res) => {
   const newContent = new Content(req.body.content);
   newContent.creator = req.user.id;
-  let price = req.user.price;
-  price = price.split(",");
-  for (let el of price) {
-    newContent.price.push(el);
-  }
+
   let cat = await Categories.findOne({ title: newContent.category });
   if (cat.length === 0) {
     cat = await new Categories({ title: newContent.category });
