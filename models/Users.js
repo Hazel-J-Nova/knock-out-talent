@@ -13,9 +13,11 @@ const UserSchema = new Schema({
   },
   creator: { type: Boolean, default: false },
   admin: { type: Boolean, default: false },
-  purchases: [String],
+  purchases: [{ type: Schema.Types.ObjectId, ref: "Content" }],
   emailVerified: { type: Boolean, default: false },
   token: { type: String, default: "" },
+  appliedForCreator: { type: Boolean, default: false },
+  readyToLinkBankAccount: { type: Boolean, default: false },
 });
 
 UserSchema.plugin(passportLocalMongoose);

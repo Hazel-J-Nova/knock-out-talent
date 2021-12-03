@@ -1,0 +1,44 @@
+         <link rel="stylesheet" href="/css/email.css"> 
+
+<% layout('layouts/boilerplate')%>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://www.instagram.com/p/CV0wFbFvRK-/"
+                    alt="" class="card-img-top" />
+                    <form action="/admin/email" method="POST" class="validated-form" novalidate>
+                <div class="card-body">
+                    
+                        <div class="mb-3">
+                            <label class="form-label" for="subject">Email Subject</label>
+                            <input class="form-control" type="text" id="subject" name="subject" value="<%= email.subject %> " autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                         <div class="mb-3">
+                <label class="form-label " for="htmlBody">HtmlBody</label>
+                <textarea class="form-control emailBody" type="text" id="htmlBody" name="htmlBody" value="<%= email.htmlBody %> "
+                    required></textarea>
+                <div class="valid-feedback ">
+                    Looks good!
+                </div>
+            </div>
+
+                       <div class="mb-3">
+                <label class="form-label " for="textBody">Text body</label>
+                <textarea class="form-control emailBody" type="text" id="textBody" name="textBody" value="<%= email.textBody %> "
+                    required></textarea>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+                        <button class="btn btn-success btn-block">update</button>
+                         </form>
+                       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

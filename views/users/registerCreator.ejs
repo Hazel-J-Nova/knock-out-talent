@@ -1,0 +1,98 @@
+
+<% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/css/multiform.css">
+<link rel="stylesheet" href="/css/accordion.css">
+
+<div class="row">
+    <h1 class="text-center">Choose image for </h1>
+    <div class="col-6 offset-3">
+        <div class="mb-3">
+      <form action="" class="api" novalidate class="validated-form">
+                            <label class="form-label" for="modelName">Name for your Model studio</label>
+                            <input class="form-control" type="text" id="modelName" name="modelName" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="mb-3">
+                <label class="form-label" for="description">About you</label>
+                <textarea class="form-control" type="text" id="aboutYou" name="aboutYou"
+                    required></textarea>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </form>
+        </div>
+    <% if (!req.user.Id) { %>
+        <form  method="POST" novalidate class="validated-form api" enctype="multipart/form-data" >
+            
+    
+    
+            <div class="mb-3">
+                
+                   
+                    
+                  
+                <div class="form-file custom-file">
+                    <input type="file" class="form-file-input" id="image0" name="image" multiple>
+                    <label class="form-file-label" for="image">
+                        <span class="form-file-text custom-file-label">please upload a picture of you ID </span>
+                        <span class="form-file-button">Browse</span>
+                    </label>
+                </div>
+                 <div class="mb-3">
+               
+            </div>
+            
+          </div>
+           
+        </form>
+         <% } %>
+             <% if (!req.user.Face) { %>
+
+        <form action="/api/registercreator" method="POST" novalidate class="validated-form api" enctype="multipart/form-data">
+            
+    
+    
+            <div class="mb-3">
+             
+                   
+                <div class="form-file custom-file">
+                    <input type="file" class="form-file-input" id="image1" name="image" multiple>
+                    <label class="form-file-label" for="image">
+                        <span class="form-file-text custom-file-label">please upload a picture of you face </span>
+                        <span class="form-file-button">Browse</span>
+                    </label>
+                </div>
+                 <div class="mb-3">
+                
+            </div>
+            </div>
+        
+           
+        </form>
+                 <% } %>
+
+                <% if (!req.user.FaceId) { %>
+
+        <form action="/api/createcreator" method="POST" novalidate class="validated-form api" enctype="multipart/form-data">
+            
+    
+    
+            <div class="mb-3">    
+                <div class="form-file custom-file">
+                    <input type="file" class="form-file-input" id="image2" name="image" multiple>
+                    <label class="form-file-label" for="image">
+                        <span class="form-file-text custom-file-label">please upload a picture of you face and Id </span>
+                        <span class="form-file-button">Browse</span>
+                    </label>
+                </div>
+    
+        </div>
+             <button class="btn btn-success btn-block" id="submitModel">submit</button>
+        </form>
+            
+  
+       
+<script src="/javascript/accordion.js"></script>
+<script src="/javascript/formUpload.js"></script>

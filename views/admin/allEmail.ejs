@@ -1,0 +1,24 @@
+<% layout('layouts/boilerplate')%>
+<% for( let email of allEmail) { %>
+     <div class="col-6 offset-3">
+<div class="card" >
+  <div class="card-body">
+    <h3 class="card-title"><%= email.subject %> </h3>
+   <div>
+    <h4 class="card-title"> Email Text Body</h4>
+    <p class="card-text"><%= email.textBody %> </p>
+    </div>
+    <div>
+    <h4 class="card-title"> Email Html Body</h4>
+    <p class="card-text"><%= email.htmlBody %> </p>
+    </div>
+    
+    <form action="/admin/email/<%= email._id %>/delete " method="post">
+    <button class=btn>Delete</button>
+    </form>
+     <button class=btn> <a href="/admin/email/<%= email._id %>/update " class="card-link">Edit</a></button>
+    
+  </div>
+</div>
+</div>
+<% } %>

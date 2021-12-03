@@ -1,23 +1,30 @@
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/allCategories.css">
 <% layout('layouts/boilerplate')%>
-<link rel="stylesheet" href="/Stylesheets/home.css">
+
+
 
  
 <h1>categories</h1>
+        <div class="container--category">
+
 <% for( let category of allCategories ) { %>
- <section class="intro">
+
 	 <% if (category.content[0].category) { %>
-	    <h1 class="section__title section__title--intro">
-            <% category.content[0].category %> 
-        </h1>
-        <% if (category.content[0].images[0]) { %>
-		 <a href="/content/category/<%= category.id %> "><img src="<%= category.content[0].images[0].url %> " alt="" class="intro__img"></a>
-		<% } %>
         
-    </section>
+
     
-    </div>
+      <% if (category.content[0].images[0]) { %>
+        <div class="cat">
+		 <a href="/content/category/<%= category.id %> "><img src="<%= category.content[0].images[0].url %> "  class="img-cat" alt="" class="card-img-top"></a>
+	    <p class="section__title section__title--intro">
+            <% category.content[0].category %> 
+        </p>
+        
+    
+     </div>
+		<% } %>      
 	 <% } %>
-      
- 
 <% } %>
+ </div>
    

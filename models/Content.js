@@ -31,6 +31,8 @@ const ContentSchema = new Schema({
   tags: [String],
   category: String,
   date: { type: Date, default: Date.now() },
+  numberOfFiles: { type: Number, default: 0 },
+  fileTypes: [String],
 });
 
 module.exports = mongoose.model("Content", ContentSchema);

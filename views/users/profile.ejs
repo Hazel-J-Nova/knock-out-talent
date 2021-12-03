@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate')%>
 
-<h1>Welcome  <% user.username %> </h1>
-<img src="<%= creator.avatar %> " alt="a picture of <%= user.username %> ">
+<h1>Welcome  <% currentUser.username %> </h1>
+<img src="<%= creator.avatar %> " alt="a picture of <%= currentUser.username %> ">
 <p><%= creator.bio %> </p>
-<button class="btn">update profile</button>
+
 <div>
     <h2> you payouts</h2>
     <p><%= creator.currentValue %> </p>
@@ -16,5 +16,7 @@
     <button class="btn">
         <a href="/admin/newContent"> New Content</a>
     </button>
-
+<button class="btn"> 
+  <a href="/users/updateProfile/<%= currentUser.username %> ">update profile</a>
+  </button>
   

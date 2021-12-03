@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate')%>
+
+
+<% for( let purchase of purchaseArray) { %>
+    
+  <section class="intro">
+        <h3><%= purchase.title %>  </h3>
+        
+        <p class="section__subtitle section__subtitle--intro"><%= purchase.description %> /p>
+            <div>
+       <% for( let [index,url] of purchase.urls.entiries() ) { %>
+        <source src="<%= url %> " type="<%= purchase.fileType[index] %> ">
+              
+ <button class="btn"><a href="<%= url%> " download rel="noopener noreferrer" target="_blank">Download</a></button>
+ </div>
+       <% } %>  
+
+   <% } %>
+</section>
+
+		

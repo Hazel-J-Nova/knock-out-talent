@@ -1,11 +1,17 @@
-
+.intro--category {
+  width: 75vw;
+ 
+}
+.content--container {
+    padding: 1rem;
+}
 
 .price {
-    background-color: #111;
-    color: var(--clr-accent);
+    margin: 0 auto;
+    
     text-align: center;
     padding: 2.5em 0;
-    min-width: 100%;
+    width: 100%;
 }
 
 
@@ -31,4 +37,8 @@
 .prices-list__link {
     padding: 2em;
     font-size: var(--fs-h3)
+}
+
+.category--img{
+    min-width: 25vw;
 }

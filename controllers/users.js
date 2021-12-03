@@ -1,14 +1,15 @@
 const User = require("../models/Users");
-const { buildParams, sendConfirmationEmail } = require("../email/email");
+const { buildParams, sendEmail } = require("../email/email");
 const fs = require("fs");
 const path = require("path");
 const flash = require("express-flash");
 let dirName = path.resolve(__dirname, "..");
 const Creator = require("../models/Creators");
 let verifyEmailPath = `${dirName}\\email\\register.html`;
-let resetEmailPath = `${dirName}\\email\\register.html`;
+let resetEmailPath = `${dirName}\\email\\resetPassword.html`;
 const Content = require("../models/Content");
 const Categories = require("../models/categories");
+const { createObject, getObject, upload, downloadURL } = require("../aws/aws");
 
 module.exports.renderRegister = (req, res) => {
   res.render("users/register");
@@ -59,17 +60,23 @@ module.exports.resetPassword = async (req, res, next) => {
       req.flash("error", "sorry there is no user with that name");
       res.redirect("/");
     }
-    late = fs.readFileSync(resetEmailPath, "utf8");
+    let htmlTemplate = fs.readFileSync(resetEmailPath, "utf8");
     htmlTemplate = htmlTemplate
       .replace("username", userName)
       .replace(
         "registerLink",
-        `http://localhost:3000/api/${user._id}/${user.token}`
+        `https://www.knockouttalent/api/${user._id}/${user.token}`
       );
-    let email = "Hazel.J.Tate@gmail.com";
+    let email = "knockout.talent.models@gmail.com";
 
-    let params = buildParams(email, htmlTemplate, "aaaaaaa");
-    sendConfirmationEmail(params);
+    let params = buildParams(
+      email,
+      "Reset your password",
+      htmlTemplate,
+      htmlTemplate
+    );
+    sendEmail(params);
+    req.flash("success", "please check your email");
     res.redirect("/");
   } catch (e) {
     req.flash("error", e.message);
@@ -95,32 +102,68 @@ module.exports.passwordResetForm = async (req, res) => {
   user.setPassword(req.body.password);
   user.token = "";
   req.flash("success", "password updated");
-  res.redirect("user/login");
+  res.redirect("/user/login");
 };
 
 module.exports.userProfile = async (req, res) => {
   const { userName } = req.params;
+  const currentUser = await User.findOne({ username: userName });
 
-  const user = await User.find({ username: userName });
-  console.log(user);
-  if (!user) {
-    req.flash("error", "You do not have permission to view that");
-    res.redirect("/");
-  }
-  const creator = "a";
-  //const creator = await Creator.findOne({ user: user._id })
-  // .populate("content")
-  // .populate("categories");
-  res.render("users/profile", { creator, user });
+  const creator = await Creator.findOne({ user: currentUser.id })
+    .populate("content")
+    .populate("categories");
+  res.render("users/profile", { creator, currentUser });
+};
+
+module.exports.updateUserProfileForm = async (req, res) => {
+  res.render("users/updateProfile");
 };
 
 module.exports.updateUserProfile = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
-  if (!user) {
-    req.flash("failure", "You do not have permission to view that");
-    res.redirect("/");
+  let { userName } = req.params;
+  const currentUser = await User.findOne({ username: userName });
+  const creator = await Creator.findOne({ user: currentUser.id });
+  const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+
+  await creator.avatar.push(...imgs);
+  await creator.save();
+  res.redirect(`user/${userName}`, currentUser);
+};
+
+module.exports.renderCreatorRegisterForm = async (req, res) => {
+  if (!req.user) {
+    req.flash("error", "Please login or signup");
+    res.redirect("/users/login");
   }
-  const creator = await Creator.findOne({ user: id });
-  res.render("users/updateProfile", { creator });
+  res.render("users/registerCreator");
+};
+
+module.exports.purchases = async (req, res) => {
+  let { userId } = req.params;
+
+  let currentUser = await User.findById(userId).populate("purchases");
+  let userPurchases = currentUser.purchases;
+  let purchaseArray = [];
+  for (let purchase of userPurchases) {
+    let contentCreator = await Creator.findById(purchase.creator);
+    let fileStore = {};
+    fileStore.contentTitle = purchase.title;
+    fileStore.creator = contentCreator.name;
+    fileStore.description = purchase.description;
+    fileStore.urls = [];
+    fileStore.fileType = [];
+
+    for (let numStep = 0; numStep <= purchase.numberOfFiles; numStep++) {
+      const params = {
+        Bucket: process.env.Bucket,
+        Key: `${req.params.id}/${numStep}`,
+      };
+      const object = await downloadURL(params);
+
+      fileStore.urls.push(object);
+      fileStore.fileType.push(purchase.fileType[numStep]);
+      purchaseArray.push(fileStore);
+    }
+  }
+  res.render("users/purchases", { purchaseArray });
 };

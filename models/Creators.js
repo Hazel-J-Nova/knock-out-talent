@@ -15,10 +15,15 @@ const CreatorSchema = new Schema({
   categories: [String],
   bio: String,
   subscribers: [{ type: Schema.Types.ObjectId, ref: "Users" }],
-  totalRevenue: {type:Number, default: 0},
-  currentValue: {type:Number, default: 0},
-  verifiedId: { type: Boolean, default: false },
-  verfiedEmail: { type: Boolean, default: false },
+  totalRevenue: { type: Number, default: 0 },
+  currentValue: { type: Number, default: 0 },
+  Id: { type: Boolean, default: false },
+  Face: { type: Boolean, default: false },
+  FaceId: { type: Boolean, default: false },
+  verified: { type: Boolean, default: false },
+
+  account: String,
+  linkedBankAccount: { type: Boolean, deafault: false },
 });
 
 module.exports = mongoose.model("Creators", CreatorSchema);

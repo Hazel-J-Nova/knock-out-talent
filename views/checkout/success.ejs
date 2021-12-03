@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate')%>
-
+<% for( let object of fileStore ) { %>
 <div>
-    
-<a href="<%= object %> " download rel="noopener noreferrer" target="_blank">texy</a>
+   
+<a href="<%= object.file %> " download rel="noopener noreferrer" target="_blank">Download your file</a>
  </div>
+<% } %>

@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+const { shuffle } = require("./utils/shuffleArray");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -124,10 +125,19 @@ app.get(
   "/",
 
   catchAsync(async (req, res) => {
+    let user = req.user;
+
     const lastMonth = getLastMonth();
-    const creators = await Creators.find({}).populate("content");
-    const categories = await Categories.find({}).populate("content");
-    const latestContent = await Content.find({ date: { $gte: lastMonth } });
+    let creators = await Creators.find({}).populate("content");
+    let categories = await Categories.find({}).populate("content");
+    let latestContent = await Content.find({
+      date: {
+        $gte: lastMonth,
+      },
+      date: {
+        $lt: Date.now(),
+      },
+    });
     let latestImages = latestContent.filter((el) => el.category);
     latestImages = latestImages.map((el) => ({
       image: el.images,
@@ -135,7 +145,16 @@ app.get(
       category: el.category,
       title: el.title,
     }));
-
+    // latestImages.image = shuffle(latestImages.image);
+    latestImages = shuffle(latestImages);
+    creators = shuffle(creators);
+    categories = shuffle(categories);
+    if (user.readyToLinkBankAccount) {
+      req.flash(
+        "success",
+        "You have been verified and are now ready to link your banc account."
+      );
+    }
     res.render("./home", { categories, latestContent, latestImages, creators });
   })
 );

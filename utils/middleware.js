@@ -9,7 +9,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
-module.export.haspurchased = async (req, res, next) => {
+module.exports.hasPurchased = async (req, res, next) => {
   const { contentId } = req.params;
   let user = req.session.passport.user;
   const activeUser = await User.findOne({ username: user });
@@ -24,11 +24,15 @@ module.export.haspurchased = async (req, res, next) => {
 };
 
 module.exports.isCreator = async (req, res, next) => {
-  const { id } = req.params;
-  const creator = await Creator.findById(id);
-  if (!creator.user.equals(req.user._id)) {
-    req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/`);
+  const user = req.user;
+  next();
+};
+
+module.exports.checkAdmin = async (req, res, next) => {
+  const user = req.user;
+  if (!req.user.admin) {
+    req.flash("error", "You do not have permission to do that");
+    res.redirect("/");
   }
   next();
 };
