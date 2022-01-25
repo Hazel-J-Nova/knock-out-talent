@@ -76,7 +76,7 @@ module.exports.createCreator = async (req, res) => {
   creator.user = req.user._id;
   creator.name = req.body.name;
   creator.bio = req.body.aboutYou;
-  //await creator.save();
+  await creator.save();
   req.flash(
     "success",
     "Please watch your email to let you know when you are verified"
@@ -99,12 +99,4 @@ module.exports.linkBankAccount = async (req, res) => {
     await creator.save();
   }
   res.send(creator.account);
-};
-
-module.exports.test = (req, res) => {
-  res.render("api/test");
-};
-
-module.exports.testPost = (req, res) => {
-  console.log(req.body);
 };

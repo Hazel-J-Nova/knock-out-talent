@@ -13,6 +13,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/Users");
 const flash = require("connect-flash");
 const cors = require("cors");
+const Email = require("./models/Emails");
 
 const path = require("path");
 const methodOverride = require("method-override");
@@ -126,6 +127,8 @@ app.get(
 
   catchAsync(async (req, res) => {
     let user = req.user;
+    let email = await Email.find({});
+    console.log(email);
 
     const lastMonth = getLastMonth();
     let creators = await Creators.find({}).populate("content");
@@ -149,11 +152,14 @@ app.get(
     latestImages = shuffle(latestImages);
     creators = shuffle(creators);
     categories = shuffle(categories);
-    if (user.readyToLinkBankAccount) {
-      req.flash(
-        "success",
-        "You have been verified and are now ready to link your banc account."
-      );
+    console.log(req.user);
+    if (user) {
+      if (user.readyToLinkBankAccount) {
+        req.flash(
+          "success",
+          "You have been verified and are now ready to link your banc account."
+        );
+      }
     }
     res.render("./home", { categories, latestContent, latestImages, creators });
   })

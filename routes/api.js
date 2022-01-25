@@ -23,7 +23,6 @@ catchAsync(api.categories);
 
 router.route("/latestcontent");
 catchAsync(api.latestContent);
-router.route("/test").get(api.test).post(api.testPost);
 
 router.route("/userInfo").get(api.userInfo);
 router.route("/createcreator").post(api.createCreator);
@@ -36,5 +35,3 @@ router
   .post(upload.array("image"), api.registerCreator);
 
 module.exports = router;
-
-

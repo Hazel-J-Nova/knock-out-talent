@@ -1,6 +1,6 @@
 const express = require("express");
 const Content = require("../models/Content");
-const Creator = require("../models/Creator");
+const Creator = require("../models/Creators");
 const { getObject, downloadURL } = require("../aws/aws");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
@@ -17,8 +17,6 @@ const multer = require("multer");
 const fs = require("fs");
 const https = require("https");
 const { countDocuments } = require("../models/Content");
-const Creator = require("../models/Creators");
-
 // const accountLink = async () => {
 //   await stripe.accountLinks.create({
 //     account: "acct_1032D82eZvKYlo2C",
@@ -47,9 +45,8 @@ router.post(
     let itemPrice = req.body;
     itemPrice = parseInt(Object.values(itemPrice)[0]);
 
-
     const content = await Content.findById(contentId);
-    const creator = await Creator.findById(content.creator)
+    const creator = await Creator.findById(content.creator);
 
     if (!content.price.includes(itemPrice)) {
       itemPrice = content.price[content.price.length - 1];
@@ -64,33 +61,33 @@ router.post(
       currency: "usd",
     });
 
-const session = await stripe.checkout.sessions.create({
-  line_items: [{
-    price: price.id,
-    quantity: 1,
-  }],
-  mode: 'payment',
- success_url: `${YOUR_DOMAIN}/checkout/${content._id}/success.html`,
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: price.id,
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${YOUR_DOMAIN}/checkout/${content._id}/success.html`,
       cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-  payment_intent_data: {
-    application_fee_amount:((itemPrice*7.25) + 30),
-    transfer_data: {
-      destination: creator.account,
-    },
-  },
-});
-
-    
+      payment_intent_data: {
+        application_fee_amount: itemPrice * 7.25 + 30,
+        transfer_data: {
+          destination: creator.account,
+        },
+      },
+    });
+  })
+);
 
 router.get(
-  "/:contentId/success",
   isLoggedIn,
   hasPurchased,
   catchAsync(async (req, res) => {
     const fileStore = [];
     const { contentId } = req.params;
     const content = await Content.findById(contentId);
-    console.log(content);
     for (let numStep = 0; numStep <= content.numberOfFiles; numStep++) {
       const params = {
         Bucket: process.env.Bucket,
@@ -100,7 +97,6 @@ router.get(
       const response = await request(object);
       fileStore.push(object);
     }
-
     res.render("checkout/success", { fileStore, content });
   })
 );

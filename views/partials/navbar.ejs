@@ -9,12 +9,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+        <% if (currentUser) { %>
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/users/purchases/<%=  currentUser._id%>">purchases</a>
+            <a class="nav-link active" aria-current="page" href="/users/purchases/<%=currentUser._id%>">purchases</a>
         </li>
+          <% } %>
+         
          <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/content/allcategories">Categories</a>
         </li>
+        <% if (currentUser) { %>
+         
+        
         <% if (currentUser.readyToLinkBancAccount) { %>
         <a href="#" class="nav-link active" id="linkBankAccount">
           <li class="nav-item">
@@ -22,7 +30,8 @@
         </li>
         </a>
         <% } %>
-        
+                <% } %>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
