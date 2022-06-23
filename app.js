@@ -45,8 +45,9 @@ db.on("error", console.error.bind(console, "Connection Error"));
 db.once("open", () => {
   console.log("i am in");
 });
-app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
+
+app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));

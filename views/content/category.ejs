@@ -3,7 +3,7 @@
 
 
  <% for( let content of allContent ) { %>
- <% if (content.images[0]) { %>
+ <% if (content.images &&content.images.length>0) { %>
     <div class= "content--container">
    <section class="intro intro--category">
         <h4><%= content.title %>  </h4>
